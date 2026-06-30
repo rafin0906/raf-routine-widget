@@ -1,0 +1,55 @@
+# Virtual Environment
+venv/
+.venv/
+env/
+ENV/
+pyvenv.cfg
+
+# Python cached files
+**/__pycache__/
+**/*.py[cod]
+**/*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Environment secrets
+.env
+.env.*
+
+# Local/IDE Configs
+.vscode/
+.idea/
+.project
+.pydevproject
+
+# Browser context and Session files
+session_state.json
+browser_data/
+
+# Application runtime database logs
+app/db/message_history.json
+app/db/processed_messages.json
+app/db/highlights.json
+app/db/important_notices.json
+app/db/routine_overrides.json
+
+# Operating System Files
+.DS_Store
+Thumbs.db

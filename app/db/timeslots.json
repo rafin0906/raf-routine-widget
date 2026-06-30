@@ -1,0 +1,12 @@
+{
+  "timeSlots": [
+    { "slot": 1, "label": "1st", "start": "08:00", "end": "08:50" },
+    { "slot": 2, "label": "2nd", "start": "08:50", "end": "09:40" },
+    { "slot": 3, "label": "3rd", "start": "09:40", "end": "10:30" },
+    { "slot": 4, "label": "4th", "start": "10:50", "end": "11:40" },
+    { "slot": 5, "label": "5th", "start": "11:40", "end": "12:30" },
+    { "slot": 6, "label": "6th", "start": "12:30", "end": "13:20" },
+    { "slot": 7, "label": "7th", "start": "14:30", "end": "15:20" },
+    { "slot": 8, "label": "8th", "start": "15:20", "end": "16:00" }
+  ]
+}

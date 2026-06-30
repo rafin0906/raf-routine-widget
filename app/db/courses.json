@@ -1,0 +1,58 @@
+{
+  "courses": {
+    "CSE2200": {
+      "code": "CSE 2200",
+      "title": "Technical Writing and Presentation Sessional",
+      "shortTitle": "Technical Writing",
+      "type": "sessional"
+    },
+    "CSE2201": {
+      "code": "CSE 2201",
+      "title": "Algorithm Analysis and Design",
+      "shortTitle": "Algorithm Analysis",
+      "type": "theory"
+    },
+    "CSE2202": {
+      "code": "CSE 2202",
+      "title": "Algorithm Analysis and Design Sessional",
+      "shortTitle": "Algorithm Lab",
+      "type": "sessional"
+    },
+    "CSE2203": {
+      "code": "CSE 2203",
+      "title": "Numerical Methods",
+      "shortTitle": "Numerical Methods",
+      "type": "theory"
+    },
+    "CSE2204": {
+      "code": "CSE 2204",
+      "title": "Numerical Methods Sessional",
+      "shortTitle": "Numerical Lab",
+      "type": "sessional"
+    },
+    "CSE2205": {
+      "code": "CSE 2205",
+      "title": "Microprocessors, Microcontrollers and Assembly Language",
+      "shortTitle": "Microprocessor",
+      "type": "theory"
+    },
+    "CSE2206": {
+      "code": "CSE 2206",
+      "title": "Microprocessors, Microcontrollers and Assembly Language Sessional",
+      "shortTitle": "Microprocessor Lab",
+      "type": "sessional"
+    },
+    "MATH2213": {
+      "code": "Math 2213",
+      "title": "Complex Variable, Partial Differential Equation and Harmonic Analysis",
+      "shortTitle": "Math",
+      "type": "theory"
+    },
+    "HUM2213": {
+      "code": "Hum 2213",
+      "title": "Industrial Management and Accountancy",
+      "shortTitle": "Industrial Management",
+      "type": "theory"
+    }
+  }
+}
