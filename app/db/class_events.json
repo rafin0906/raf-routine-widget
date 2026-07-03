@@ -465,7 +465,7 @@
                     "CSE2200"
                 ],
                 "date": "2026-07-10",
-                "day": "next week",
+                "day": "thursday",
                 "displayTitle": "CSE 2200 Lab",
                 "end": "12:00",
                 "eventType": "lab_start",
@@ -478,8 +478,8 @@
                 "status": "scheduled",
                 "teachers": []
             },
-            "sourceMessageId": "wa-52d08133d4c87704",
-            "createdAt": "2026-07-03T19:03:54.430880+06:00"
+            "sourceMessageId": "wa-d9c9c7ccd145028b",
+            "createdAt": "2026-07-03T23:29:59.141106+06:00"
         },
         {
             "id": "override-cancel-2026-07-03-CSE2205",
@@ -495,8 +495,8 @@
                     "CSE2205"
                 ]
             },
-            "sourceMessageId": "wa-bfff9b37b325dbd5",
-            "createdAt": "2026-07-03T19:05:29.576139+06:00"
+            "sourceMessageId": "wa-1d5593fb49846c58",
+            "createdAt": "2026-07-03T23:31:26.675823+06:00"
         }
     ]
 }

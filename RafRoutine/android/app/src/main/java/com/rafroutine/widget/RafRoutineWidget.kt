@@ -22,6 +22,7 @@ import androidx.glance.layout.height
 import androidx.glance.layout.padding
 import androidx.glance.layout.width
 import com.rafroutine.R
+import com.rafroutine.data.BackendRoutineSync
 import com.rafroutine.data.RoutineRepository
 import com.rafroutine.widget.components.Header
 import com.rafroutine.widget.components.HighlightsCard
@@ -46,6 +47,7 @@ class RafRoutineWidget : GlanceAppWidget() {
     override val sizeMode: SizeMode = SizeMode.Exact
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
+        BackendRoutineSync.sync(context)
         val stored = RoutineRepository.read(context)
         val routine = RoutineParser.parse(stored) ?: RoutineParser.sample()
 
