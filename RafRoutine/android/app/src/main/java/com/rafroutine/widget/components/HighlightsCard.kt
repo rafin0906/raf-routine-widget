@@ -9,6 +9,7 @@ import androidx.glance.layout.Row
 import androidx.glance.layout.Spacer
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.height
+import androidx.glance.layout.padding
 import androidx.glance.layout.width
 import androidx.glance.text.Text
 import com.rafroutine.widget.model.HighlightItem
@@ -29,30 +30,34 @@ fun HighlightsCard(
             modifier = GlanceModifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            // Title takes the flexible space and truncates if the column is
+            // narrow, so the "GRADED" caption never gets clipped mid-word.
             Text(
                 text = "Weekly Highlights",
                 maxLines = 1,
+                modifier = GlanceModifier.defaultWeight(),
                 style = titleStyle(WidgetTokens.TextTitle, size = 11)
             )
-            Spacer(GlanceModifier.defaultWeight())
+            Spacer(GlanceModifier.width(6.dp))
             Text(text = "GRADED", maxLines = 1, style = labelStyle(WidgetTokens.Muted, size = 7))
         }
 
         Spacer(GlanceModifier.height(6.dp))
 
+        // Spacing is applied as per-row top padding rather than interleaved
+        // Spacers. A Glance Column renders at most 10 direct children; with 5
+        // rows, interleaved Spacers would push the count to 11 and silently
+        // drop the last highlight.
         items.forEachIndexed { i, item ->
-            HighlightRow(item)
-            if (i != items.lastIndex) {
-                Spacer(GlanceModifier.height(5.dp))
-            }
+            HighlightRow(item, topPadding = if (i == 0) 0.dp else 5.dp)
         }
     }
 }
 
 @Composable
-private fun HighlightRow(item: HighlightItem) {
+private fun HighlightRow(item: HighlightItem, topPadding: androidx.compose.ui.unit.Dp) {
     Row(
-        modifier = GlanceModifier.fillMaxWidth(),
+        modifier = GlanceModifier.fillMaxWidth().padding(top = topPadding),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(

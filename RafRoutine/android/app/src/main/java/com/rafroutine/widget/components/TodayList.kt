@@ -52,24 +52,28 @@ fun TodayList(
 
         Spacer(GlanceModifier.height(6.dp))
 
+        // Per-row top padding instead of interleaved Spacers keeps the direct
+        // child count under Glance's 10-children-per-Column limit (which would
+        // otherwise drop the last class once the timeline grows).
         timeline.forEachIndexed { i, item ->
             val status = statuses.getOrElse(i) { LiveState.Status.UPCOMING }
-            ClassRow(item, status)
-            if (i != timeline.lastIndex) {
-                Spacer(GlanceModifier.height(5.dp))
-            }
+            ClassRow(item, status, topPadding = if (i == 0) 0.dp else 5.dp)
         }
     }
 }
 
 @Composable
-private fun ClassRow(item: ClassItem, status: LiveState.Status) {
+private fun ClassRow(
+    item: ClassItem,
+    status: LiveState.Status,
+    topPadding: androidx.compose.ui.unit.Dp
+) {
     val dimmed = status == LiveState.Status.DONE
     val nameColor = if (dimmed) WidgetTokens.Muted else WidgetTokens.TextBody
     val timeColor = if (dimmed) WidgetTokens.Grey else WidgetTokens.Secondary
 
     Row(
-        modifier = GlanceModifier.fillMaxWidth(),
+        modifier = GlanceModifier.fillMaxWidth().padding(top = topPadding),
         verticalAlignment = Alignment.CenterVertically
     ) {
         StatusIndicator(status)
