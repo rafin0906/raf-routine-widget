@@ -1,293 +1,442 @@
 {
-  "classEvents": [
-    {
-      "id": "sat-c-02-cse2203",
-      "sectionId": "cse-2y-even-c",
-      "day": "saturday",
-      "slotStart": 2,
-      "slotEnd": 2,
-      "start": "08:50",
-      "end": "09:40",
-      "courseIds": ["CSE2203"],
-      "displayTitle": "Numerical Methods",
-      "teachers": ["AYS"],
-      "rooms": ["202"],
-      "eventType": "class",
-      "status": "scheduled"
-    },
-    {
-      "id": "sat-c-03-math2213",
-      "sectionId": "cse-2y-even-c",
-      "day": "saturday",
-      "slotStart": 3,
-      "slotEnd": 3,
-      "start": "09:40",
-      "end": "10:30",
-      "courseIds": ["MATH2213"],
-      "displayTitle": "Math",
-      "teachers": ["MRK"],
-      "rooms": ["202"],
-      "eventType": "class",
-      "status": "scheduled"
-    },
-    {
-      "id": "sat-c-04-06-cse2206-cse2202",
-      "sectionId": "cse-2y-even-c",
-      "day": "saturday",
-      "slotStart": 4,
-      "slotEnd": 6,
-      "start": "10:50",
-      "end": "13:20",
-      "courseIds": ["CSE2206", "CSE2202"],
-      "displayTitle": "Microprocessor Lab / Algorithm Lab",
-      "teachers": ["MSH", "KZN"],
-      "rooms": ["ACL Lab", "OS Lab"],
-      "eventType": "lab",
-      "status": "scheduled"
-    },
-    {
-      "id": "sat-c-08-cse2204",
-      "sectionId": "cse-2y-even-c",
-      "day": "saturday",
-      "slotStart": 8,
-      "slotEnd": 8,
-      "start": "15:20",
-      "end": "16:00",
-      "courseIds": ["CSE2204"],
-      "displayTitle": "Numerical Lab",
-      "teachers": ["AYS"],
-      "rooms": ["ACL Lab"],
-      "eventType": "lab",
-      "status": "scheduled"
-    },
-
-    {
-      "id": "sun-c-04-hum2213",
-      "sectionId": "cse-2y-even-c",
-      "day": "sunday",
-      "slotStart": 4,
-      "slotEnd": 4,
-      "start": "10:50",
-      "end": "11:40",
-      "courseIds": ["HUM2213"],
-      "displayTitle": "Industrial Management",
-      "teachers": ["ABS"],
-      "rooms": ["201"],
-      "eventType": "class",
-      "status": "scheduled"
-    },
-    {
-      "id": "sun-c-05-cse2201",
-      "sectionId": "cse-2y-even-c",
-      "day": "sunday",
-      "slotStart": 5,
-      "slotEnd": 5,
-      "start": "11:40",
-      "end": "12:30",
-      "courseIds": ["CSE2201"],
-      "displayTitle": "Algorithm Analysis",
-      "teachers": ["KZN"],
-      "rooms": ["201"],
-      "eventType": "class",
-      "status": "scheduled"
-    },
-    {
-      "id": "sun-c-06-cse2205",
-      "sectionId": "cse-2y-even-c",
-      "day": "sunday",
-      "slotStart": 6,
-      "slotEnd": 6,
-      "start": "12:30",
-      "end": "13:20",
-      "courseIds": ["CSE2205"],
-      "displayTitle": "Microprocessor",
-      "teachers": ["SZM", "MSH"],
-      "rooms": ["201"],
-      "eventType": "class",
-      "status": "scheduled"
-    },
-    {
-      "id": "sun-c-07-08-cse2200",
-      "sectionId": "cse-2y-even-c",
-      "day": "sunday",
-      "slotStart": 7,
-      "slotEnd": 8,
-      "start": "14:30",
-      "end": "16:00",
-      "courseIds": ["CSE2200"],
-      "displayTitle": "Technical Writing",
-      "teachers": ["NOS"],
-      "rooms": ["102"],
-      "eventType": "sessional",
-      "status": "scheduled"
-    },
-
-    {
-      "id": "mon-c-03-math2213",
-      "sectionId": "cse-2y-even-c",
-      "day": "monday",
-      "slotStart": 3,
-      "slotEnd": 3,
-      "start": "09:40",
-      "end": "10:30",
-      "courseIds": ["MATH2213"],
-      "displayTitle": "Math",
-      "teachers": ["MBH"],
-      "rooms": ["101"],
-      "eventType": "class",
-      "status": "scheduled"
-    },
-    {
-      "id": "mon-c-04-cse2203",
-      "sectionId": "cse-2y-even-c",
-      "day": "monday",
-      "slotStart": 4,
-      "slotEnd": 4,
-      "start": "10:50",
-      "end": "11:40",
-      "courseIds": ["CSE2203"],
-      "displayTitle": "Numerical Methods",
-      "teachers": ["AYS"],
-      "rooms": ["102"],
-      "eventType": "class",
-      "status": "scheduled"
-    },
-    {
-      "id": "mon-c-05-06-cse2205",
-      "sectionId": "cse-2y-even-c",
-      "day": "monday",
-      "slotStart": 5,
-      "slotEnd": 6,
-      "start": "11:40",
-      "end": "13:20",
-      "courseIds": ["CSE2205"],
-      "displayTitle": "Microprocessor",
-      "teachers": ["SZM", "MSH"],
-      "rooms": ["102"],
-      "eventType": "class",
-      "status": "scheduled"
-    },
-    {
-      "id": "mon-c-07-08-cse2202",
-      "sectionId": "cse-2y-even-c",
-      "day": "monday",
-      "slotStart": 7,
-      "slotEnd": 8,
-      "start": "14:30",
-      "end": "16:00",
-      "courseIds": ["CSE2202"],
-      "displayTitle": "Algorithm Lab",
-      "teachers": ["KZN"],
-      "rooms": ["OS Lab"],
-      "eventType": "lab",
-      "status": "scheduled"
-    },
-
-    {
-      "id": "tue-c-04-cse2201",
-      "sectionId": "cse-2y-even-c",
-      "day": "tuesday",
-      "slotStart": 4,
-      "slotEnd": 4,
-      "start": "10:50",
-      "end": "11:40",
-      "courseIds": ["CSE2201"],
-      "displayTitle": "Algorithm Analysis",
-      "teachers": ["KZN"],
-      "rooms": ["Seminar"],
-      "eventType": "seminar",
-      "status": "scheduled"
-    },
-    {
-      "id": "tue-c-05-hum2213",
-      "sectionId": "cse-2y-even-c",
-      "day": "tuesday",
-      "slotStart": 5,
-      "slotEnd": 5,
-      "start": "11:40",
-      "end": "12:30",
-      "courseIds": ["HUM2213"],
-      "displayTitle": "Industrial Management",
-      "teachers": ["ABS"],
-      "rooms": ["Seminar"],
-      "eventType": "seminar",
-      "status": "scheduled"
-    },
-    {
-      "id": "tue-c-06-math2213",
-      "sectionId": "cse-2y-even-c",
-      "day": "tuesday",
-      "slotStart": 6,
-      "slotEnd": 6,
-      "start": "12:30",
-      "end": "13:20",
-      "courseIds": ["MATH2213"],
-      "displayTitle": "Math",
-      "teachers": ["MRK"],
-      "rooms": ["Seminar"],
-      "eventType": "seminar",
-      "status": "scheduled"
-    },
-
-    {
-      "id": "wed-c-04-hum2213",
-      "sectionId": "cse-2y-even-c",
-      "day": "wednesday",
-      "slotStart": 4,
-      "slotEnd": 4,
-      "start": "10:50",
-      "end": "11:40",
-      "courseIds": ["HUM2213"],
-      "displayTitle": "Industrial Management",
-      "teachers": ["SI"],
-      "rooms": ["201"],
-      "eventType": "class",
-      "status": "scheduled"
-    },
-    {
-      "id": "wed-c-05-cse2201",
-      "sectionId": "cse-2y-even-c",
-      "day": "wednesday",
-      "slotStart": 5,
-      "slotEnd": 5,
-      "start": "11:40",
-      "end": "12:30",
-      "courseIds": ["CSE2201"],
-      "displayTitle": "Algorithm Analysis",
-      "teachers": ["KZN"],
-      "rooms": ["201"],
-      "eventType": "class",
-      "status": "scheduled"
-    },
-    {
-      "id": "wed-c-06-cse2203",
-      "sectionId": "cse-2y-even-c",
-      "day": "wednesday",
-      "slotStart": 6,
-      "slotEnd": 6,
-      "start": "12:30",
-      "end": "13:20",
-      "courseIds": ["CSE2203"],
-      "displayTitle": "Numerical Methods",
-      "teachers": ["AYS"],
-      "rooms": ["201"],
-      "eventType": "class",
-      "status": "scheduled"
-    },
-    {
-      "id": "wed-c-07-08-cse2206",
-      "sectionId": "cse-2y-even-c",
-      "day": "wednesday",
-      "slotStart": 7,
-      "slotEnd": 8,
-      "start": "14:30",
-      "end": "16:00",
-      "courseIds": ["CSE2206"],
-      "displayTitle": "Microprocessor Lab",
-      "teachers": ["SZM"],
-      "rooms": ["ACL Lab"],
-      "eventType": "lab",
-      "status": "scheduled"
-    }
-  ]
+    "classEvents": [
+        {
+            "id": "sat-c-02-cse2203",
+            "sectionId": "cse-2y-even-c",
+            "day": "saturday",
+            "slotStart": 2,
+            "slotEnd": 2,
+            "start": "08:50",
+            "end": "09:40",
+            "courseIds": [
+                "CSE2203"
+            ],
+            "displayTitle": "Numerical Methods",
+            "teachers": [
+                "AYS"
+            ],
+            "rooms": [
+                "202"
+            ],
+            "eventType": "class",
+            "status": "scheduled"
+        },
+        {
+            "id": "sat-c-03-math2213",
+            "sectionId": "cse-2y-even-c",
+            "day": "saturday",
+            "slotStart": 3,
+            "slotEnd": 3,
+            "start": "09:40",
+            "end": "10:30",
+            "courseIds": [
+                "MATH2213"
+            ],
+            "displayTitle": "Math",
+            "teachers": [
+                "MRK"
+            ],
+            "rooms": [
+                "202"
+            ],
+            "eventType": "class",
+            "status": "scheduled"
+        },
+        {
+            "id": "sat-c-04-06-cse2206-cse2202",
+            "sectionId": "cse-2y-even-c",
+            "day": "saturday",
+            "slotStart": 4,
+            "slotEnd": 6,
+            "start": "10:50",
+            "end": "13:20",
+            "courseIds": [
+                "CSE2206",
+                "CSE2202"
+            ],
+            "displayTitle": "Microprocessor Lab / Algorithm Lab",
+            "teachers": [
+                "MSH",
+                "KZN"
+            ],
+            "rooms": [
+                "ACL Lab",
+                "OS Lab"
+            ],
+            "eventType": "lab",
+            "status": "scheduled"
+        },
+        {
+            "id": "sat-c-08-cse2204",
+            "sectionId": "cse-2y-even-c",
+            "day": "saturday",
+            "slotStart": 8,
+            "slotEnd": 8,
+            "start": "15:20",
+            "end": "16:00",
+            "courseIds": [
+                "CSE2204"
+            ],
+            "displayTitle": "Numerical Lab",
+            "teachers": [
+                "AYS"
+            ],
+            "rooms": [
+                "ACL Lab"
+            ],
+            "eventType": "lab",
+            "status": "scheduled"
+        },
+        {
+            "id": "sun-c-04-hum2213",
+            "sectionId": "cse-2y-even-c",
+            "day": "sunday",
+            "slotStart": 4,
+            "slotEnd": 4,
+            "start": "10:50",
+            "end": "11:40",
+            "courseIds": [
+                "HUM2213"
+            ],
+            "displayTitle": "Industrial Management",
+            "teachers": [
+                "ABS"
+            ],
+            "rooms": [
+                "201"
+            ],
+            "eventType": "class",
+            "status": "scheduled"
+        },
+        {
+            "id": "sun-c-05-cse2201",
+            "sectionId": "cse-2y-even-c",
+            "day": "sunday",
+            "slotStart": 5,
+            "slotEnd": 5,
+            "start": "11:40",
+            "end": "12:30",
+            "courseIds": [
+                "CSE2201"
+            ],
+            "displayTitle": "Algorithm Analysis",
+            "teachers": [
+                "KZN"
+            ],
+            "rooms": [
+                "201"
+            ],
+            "eventType": "class",
+            "status": "scheduled"
+        },
+        {
+            "id": "sun-c-06-cse2205",
+            "sectionId": "cse-2y-even-c",
+            "day": "sunday",
+            "slotStart": 6,
+            "slotEnd": 6,
+            "start": "12:30",
+            "end": "13:20",
+            "courseIds": [
+                "CSE2205"
+            ],
+            "displayTitle": "Microprocessor",
+            "teachers": [
+                "SZM",
+                "MSH"
+            ],
+            "rooms": [
+                "201"
+            ],
+            "eventType": "class",
+            "status": "scheduled"
+        },
+        {
+            "id": "sun-c-07-08-cse2200",
+            "sectionId": "cse-2y-even-c",
+            "day": "sunday",
+            "slotStart": 7,
+            "slotEnd": 8,
+            "start": "14:30",
+            "end": "16:00",
+            "courseIds": [
+                "CSE2200"
+            ],
+            "displayTitle": "Technical Writing",
+            "teachers": [
+                "NOS"
+            ],
+            "rooms": [
+                "102"
+            ],
+            "eventType": "sessional",
+            "status": "scheduled"
+        },
+        {
+            "id": "mon-c-03-math2213",
+            "sectionId": "cse-2y-even-c",
+            "day": "monday",
+            "slotStart": 3,
+            "slotEnd": 3,
+            "start": "09:40",
+            "end": "10:30",
+            "courseIds": [
+                "MATH2213"
+            ],
+            "displayTitle": "Math",
+            "teachers": [
+                "MBH"
+            ],
+            "rooms": [
+                "101"
+            ],
+            "eventType": "class",
+            "status": "scheduled"
+        },
+        {
+            "id": "mon-c-04-cse2203",
+            "sectionId": "cse-2y-even-c",
+            "day": "monday",
+            "slotStart": 4,
+            "slotEnd": 4,
+            "start": "10:50",
+            "end": "11:40",
+            "courseIds": [
+                "CSE2203"
+            ],
+            "displayTitle": "Numerical Methods",
+            "teachers": [
+                "AYS"
+            ],
+            "rooms": [
+                "102"
+            ],
+            "eventType": "class",
+            "status": "scheduled"
+        },
+        {
+            "id": "mon-c-05-06-cse2205",
+            "sectionId": "cse-2y-even-c",
+            "day": "monday",
+            "slotStart": 5,
+            "slotEnd": 6,
+            "start": "11:40",
+            "end": "13:20",
+            "courseIds": [
+                "CSE2205"
+            ],
+            "displayTitle": "Microprocessor",
+            "teachers": [
+                "SZM",
+                "MSH"
+            ],
+            "rooms": [
+                "102"
+            ],
+            "eventType": "class",
+            "status": "scheduled"
+        },
+        {
+            "id": "mon-c-07-08-cse2202",
+            "sectionId": "cse-2y-even-c",
+            "day": "monday",
+            "slotStart": 7,
+            "slotEnd": 8,
+            "start": "14:30",
+            "end": "16:00",
+            "courseIds": [
+                "CSE2202"
+            ],
+            "displayTitle": "Algorithm Lab",
+            "teachers": [
+                "KZN"
+            ],
+            "rooms": [
+                "OS Lab"
+            ],
+            "eventType": "lab",
+            "status": "scheduled"
+        },
+        {
+            "id": "tue-c-04-cse2201",
+            "sectionId": "cse-2y-even-c",
+            "day": "tuesday",
+            "slotStart": 4,
+            "slotEnd": 4,
+            "start": "10:50",
+            "end": "11:40",
+            "courseIds": [
+                "CSE2201"
+            ],
+            "displayTitle": "Algorithm Analysis",
+            "teachers": [
+                "KZN"
+            ],
+            "rooms": [
+                "Seminar"
+            ],
+            "eventType": "seminar",
+            "status": "scheduled"
+        },
+        {
+            "id": "tue-c-05-hum2213",
+            "sectionId": "cse-2y-even-c",
+            "day": "tuesday",
+            "slotStart": 5,
+            "slotEnd": 5,
+            "start": "11:40",
+            "end": "12:30",
+            "courseIds": [
+                "HUM2213"
+            ],
+            "displayTitle": "Industrial Management",
+            "teachers": [
+                "ABS"
+            ],
+            "rooms": [
+                "Seminar"
+            ],
+            "eventType": "seminar",
+            "status": "scheduled"
+        },
+        {
+            "id": "tue-c-06-math2213",
+            "sectionId": "cse-2y-even-c",
+            "day": "tuesday",
+            "slotStart": 6,
+            "slotEnd": 6,
+            "start": "12:30",
+            "end": "13:20",
+            "courseIds": [
+                "MATH2213"
+            ],
+            "displayTitle": "Math",
+            "teachers": [
+                "MRK"
+            ],
+            "rooms": [
+                "Seminar"
+            ],
+            "eventType": "seminar",
+            "status": "scheduled"
+        },
+        {
+            "id": "wed-c-04-hum2213",
+            "sectionId": "cse-2y-even-c",
+            "day": "wednesday",
+            "slotStart": 4,
+            "slotEnd": 4,
+            "start": "10:50",
+            "end": "11:40",
+            "courseIds": [
+                "HUM2213"
+            ],
+            "displayTitle": "Industrial Management",
+            "teachers": [
+                "SI"
+            ],
+            "rooms": [
+                "201"
+            ],
+            "eventType": "class",
+            "status": "scheduled"
+        },
+        {
+            "id": "wed-c-05-cse2201",
+            "sectionId": "cse-2y-even-c",
+            "day": "wednesday",
+            "slotStart": 5,
+            "slotEnd": 5,
+            "start": "11:40",
+            "end": "12:30",
+            "courseIds": [
+                "CSE2201"
+            ],
+            "displayTitle": "Algorithm Analysis",
+            "teachers": [
+                "KZN"
+            ],
+            "rooms": [
+                "201"
+            ],
+            "eventType": "class",
+            "status": "scheduled"
+        },
+        {
+            "id": "wed-c-06-cse2203",
+            "sectionId": "cse-2y-even-c",
+            "day": "wednesday",
+            "slotStart": 6,
+            "slotEnd": 6,
+            "start": "12:30",
+            "end": "13:20",
+            "courseIds": [
+                "CSE2203"
+            ],
+            "displayTitle": "Numerical Methods",
+            "teachers": [
+                "AYS"
+            ],
+            "rooms": [
+                "201"
+            ],
+            "eventType": "class",
+            "status": "scheduled"
+        },
+        {
+            "id": "wed-c-07-08-cse2206",
+            "sectionId": "cse-2y-even-c",
+            "day": "wednesday",
+            "slotStart": 7,
+            "slotEnd": 8,
+            "start": "14:30",
+            "end": "16:00",
+            "courseIds": [
+                "CSE2206"
+            ],
+            "displayTitle": "Microprocessor Lab",
+            "teachers": [
+                "SZM"
+            ],
+            "rooms": [
+                "ACL Lab"
+            ],
+            "eventType": "lab",
+            "status": "scheduled"
+        }
+    ],
+    "overrides": [
+        {
+            "id": "override-extra-2026-07-10-",
+            "overrideDate": "2026-07-10",
+            "targetEventId": null,
+            "operation": "add_extra_class",
+            "data": {
+                "changes": {
+                    "labStart": "next week"
+                },
+                "date": "2026-07-10",
+                "day": "thursday",
+                "status": "scheduled",
+                "targetCourseIds": [
+                    "CSE2200"
+                ],
+                "id": "extra-2026-07-10-extra-0000"
+            },
+            "sourceMessageId": "wa-52d08133d4c87704",
+            "createdAt": "2026-07-03T18:27:49.115003+06:00"
+        },
+        {
+            "id": "override-cancel-2026-07-07-MATH2213",
+            "overrideDate": "2026-07-07",
+            "targetEventId": null,
+            "operation": "cancel_class",
+            "data": {
+                "status": "cancelled",
+                "reason": "Replaced by another class"
+            },
+            "sourceMessageId": "wa-83342e8b179a35c3",
+            "createdAt": "2026-07-03T18:28:14.768247+06:00"
+        }
+    ]
 }
