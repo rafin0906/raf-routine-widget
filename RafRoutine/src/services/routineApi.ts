@@ -2,8 +2,7 @@
  * routineApi — fetches live routine data from the NeuraRUET backend and adapts
  * it into the app's `Routine` shape.
  *
- * The base URL (`src/config.ts`) is `10.0.2.2:8000` — the Android emulator's
- * alias for the host machine's localhost, where the FastAPI backend runs.
+ * The base URL (`src/config.ts`) points at the deployed production backend.
  */
 
 import {API_BASE_URL, API_TIMEOUT_MS} from '../config';
