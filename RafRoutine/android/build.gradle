@@ -1,0 +1,25 @@
+// Top-level build file for Raf Routine (React Native 0.76 + Jetpack Glance).
+// NOTE: kotlinVersion here is pinned to 1.9.24 to match the compose-compiler
+// extension (1.5.14) used by the widget. If your `react-native init` baseline
+// ships a different Kotlin version, align it here (and in app/build.gradle).
+buildscript {
+    ext {
+        buildToolsVersion = "35.0.0"
+        minSdkVersion = 26          // 26 so we can use java.time directly in the widget
+        compileSdkVersion = 35
+        targetSdkVersion = 35
+        ndkVersion = "26.1.10909125"
+        kotlinVersion = "1.9.24"    // known-good with composeCompiler 1.5.14 + Glance 1.1.0
+    }
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("com.android.tools.build:gradle")
+        classpath("com.facebook.react:react-native-gradle-plugin")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
+    }
+}
+
+apply plugin: "com.facebook.react.rootproject"

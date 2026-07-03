@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Base application theme. AppCompat.DayNight.NoActionBar is provided by
+         the appcompat dependency that React Native pulls in, so this requires
+         no extra Gradle dependencies. -->
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:editTextBackground">@android:color/transparent</item>
+    </style>
+
+</resources>

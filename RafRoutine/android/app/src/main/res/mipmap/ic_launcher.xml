@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Self-contained fallback launcher icon for API < 26 (background + mark). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#E25E15"
+        android:pathData="M0,0 H108 V108 H0 Z" />
+    <group
+        android:scaleX="3"
+        android:scaleY="3"
+        android:translateX="18"
+        android:translateY="18">
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M12,2 L21,12 L12,22 L3,12 Z M12,6.5 L7.2,12 L12,17.5 L16.8,12 Z" />
+    </group>
+</vector>
