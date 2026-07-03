@@ -437,6 +437,23 @@
             },
             "sourceMessageId": "wa-83342e8b179a35c3",
             "createdAt": "2026-07-03T18:28:14.768247+06:00"
+        },
+        {
+            "id": "override-cancel-2026-07-03-CSE2205",
+            "overrideDate": "2026-07-03",
+            "targetEventId": null,
+            "operation": "cancel_class",
+            "data": {
+                "date": "2026-07-03",
+                "day": "friday",
+                "reason": "extra class already taken",
+                "status": "cancelled",
+                "targetCourseIds": [
+                    "CSE2205"
+                ]
+            },
+            "sourceMessageId": "wa-bfff9b37b325dbd5",
+            "createdAt": "2026-07-03T18:29:24.115776+06:00"
         }
     ]
 }
