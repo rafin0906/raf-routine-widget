@@ -3,17 +3,14 @@ package com.rafroutine.widget
 import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
-import androidx.glance.ColorFilter
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.LocalSize
-import androidx.glance.Image
 import androidx.glance.ImageProvider
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.provideContent
 import androidx.glance.background
-import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
 import androidx.glance.layout.Column
 import androidx.glance.layout.Row
@@ -24,14 +21,11 @@ import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.height
 import androidx.glance.layout.padding
 import androidx.glance.layout.width
-import androidx.glance.unit.ColorProvider
 import com.rafroutine.R
 import com.rafroutine.data.RoutineRepository
 import com.rafroutine.widget.components.Header
 import com.rafroutine.widget.components.HighlightsCard
 import com.rafroutine.widget.components.ImportantCard
-import com.rafroutine.widget.components.NextCard
-import com.rafroutine.widget.components.NowCard
 import com.rafroutine.widget.components.TodayList
 import com.rafroutine.widget.model.LiveState
 import com.rafroutine.widget.model.Routine
@@ -69,24 +63,12 @@ class RafRoutineWidget : GlanceAppWidget() {
 
         val statuses = LiveState.statuses(routine.timeline, now)
         val nowIdx = LiveState.nowIndex(routine.timeline, now)
-        val nextIdx = LiveState.nextIndex(routine.timeline, now)
 
         val running = routine.timeline.getOrNull(nowIdx)
-        val next = routine.timeline.getOrNull(nextIdx)
 
         val (pct, minsLeft) = if (running != null) {
             LiveState.progress(running, now)
         } else 0 to 0
-
-        val untilLabel = if (next != null) {
-            LiveState.parseTime(next.start)?.let { LiveState.untilLabel(it, now) } ?: ""
-        } else ""
-
-        val durationLabel = if (next != null) {
-            val s = LiveState.parseTime(next.start)
-            val e = LiveState.parseTime(next.end)
-            if (s != null && e != null) LiveState.durationLabel(s, e) else ""
-        } else ""
 
         val dateLabel = LiveState.dateLabel(today)
         val updatedText = LiveState.relativeUpdated(routine.meta.updatedAt, nowMs)
@@ -115,58 +97,31 @@ class RafRoutineWidget : GlanceAppWidget() {
                 Spacer(GlanceModifier.height(10.dp))
 
                 Row(modifier = GlanceModifier.fillMaxSize()) {
-                    // ----- Left column: Now / Next + Today list -----
-                    // NOTE: fill HEIGHT only. A .fillMaxSize() here also fills
-                    // width (match_parent), which would swallow the whole Row and
-                    // collapse the right column to zero. The horizontal split is
-                    // owned by defaultWeight (left) + fixed width (right).
-                    Column(modifier = GlanceModifier.defaultWeight().fillMaxHeight()) {
-                        Row(
-                            modifier = GlanceModifier.fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            NowCard(
-                                running = running,
-                                pct = pct,
-                                minsLeft = minsLeft,
-                                modifier = GlanceModifier.defaultWeight()
-                            )
-                            // Arrow connecting NOW -> NEXT.
-                            Image(
-                                provider = ImageProvider(R.drawable.ic_arrow),
-                                contentDescription = null,
-                                modifier = GlanceModifier
-                                    .width(16.dp)
-                                    .height(16.dp)
-                                    .padding(horizontal = 4.dp),
-                                colorFilter = ColorFilter.tint(
-                                    ColorProvider(WidgetTokens.OnGradientSoft)
-                                )
-                            )
-                            NextCard(
-                                next = next,
-                                untilLabel = untilLabel,
-                                durationLabel = durationLabel,
-                                modifier = GlanceModifier.defaultWeight()
-                            )
-                        }
-
-                        Spacer(GlanceModifier.height(8.dp))
-
-                        TodayList(
-                            timeline = routine.timeline,
-                            statuses = statuses,
-                            modifier = GlanceModifier.fillMaxWidth().defaultWeight()
-                        )
-                    }
+                    // ----- Left column: the Today list now owns the full height.
+                    // The NOW/NEXT hero cards were removed; the running class's
+                    // progress moved onto its row in the list. fillMaxHeight only
+                    // (not fillMaxSize) so it doesn't swallow the whole Row and
+                    // collapse the right column; the split is defaultWeight (left)
+                    // + fixed width (right).
+                    TodayList(
+                        timeline = routine.timeline,
+                        statuses = statuses,
+                        runningIndex = nowIdx,
+                        progressPct = pct,
+                        minsLeft = minsLeft,
+                        modifier = GlanceModifier.defaultWeight().fillMaxHeight()
+                    )
 
                     Spacer(GlanceModifier.width(WidgetTokens.SectionGap))
 
                     // ----- Right column: Important + Highlights -----
+                    // Both cards get a weighted (bounded) height so their inner
+                    // LazyColumns have a fixed viewport to scroll within. A
+                    // wrap-content card would give the lazy list no bounds.
                     Column(modifier = GlanceModifier.width(rightColumnWidth).fillMaxHeight()) {
                         ImportantCard(
                             items = routine.important,
-                            modifier = GlanceModifier.fillMaxWidth()
+                            modifier = GlanceModifier.fillMaxWidth().defaultWeight()
                         )
 
                         Spacer(GlanceModifier.height(8.dp))

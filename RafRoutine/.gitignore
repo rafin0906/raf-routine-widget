@@ -1,4 +1,5 @@
 # OSX
+<<<<<<< HEAD
 #
 .DS_Store
 .AppleDouble
@@ -16,6 +17,66 @@ $RECYCLE.BIN/
 # Xcode
 #
 build/
+=======
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Editor / IDE
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn-debug.log
+
+# React Native
+.expo/
+.expo-shared/
+dist/
+web-build/
+
+# Metro bundler
+.metro-health-check*
+
+# Buck
+buck-out/
+\.buckd/
+*.keystore
+!debug.keystore
+
+# Android
+android/.gradle/
+android/app/build/
+android/build/
+android/captures/
+android/local.properties
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# Gradle
+.gradle/
+build/
+local.properties
+
+# iOS (in case it's added later)
+ios/Pods/
+ios/build/
+ios/.xcode.env.local
+*.xcworkspace
+DerivedData/
+>>>>>>> 1b849bd (updated gitignore)
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -24,6 +85,7 @@ build/
 !default.mode2v3
 *.perspectivev3
 !default.perspectivev3
+<<<<<<< HEAD
 xcuserdata
 *.xccheckout
 *.moved-aside
@@ -116,3 +178,18 @@ out/
 *.orig
 *.rej
 *.patch
+=======
+xcuserdata/
+*.xccheckout
+*.moved-aside
+*.hmap
+*.ipa
+
+# Environment / secrets
+.env
+.env.local
+.env.*.local
+
+# Test coverage
+coverage/
+>>>>>>> 1b849bd (updated gitignore)

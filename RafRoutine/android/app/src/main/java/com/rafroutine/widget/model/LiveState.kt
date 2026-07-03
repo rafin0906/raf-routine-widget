@@ -83,11 +83,11 @@ object LiveState {
         Status.UPCOMING -> "SOON"
     }
 
-    /** Status color for the Today list / indicators. */
+    /** Status color for the Today list / indicators (matches each row's dot). */
     fun statusColor(status: Status): Color = when (status) {
-        Status.DONE -> WidgetTokens.Muted
-        Status.RUNNING -> WidgetTokens.Green
-        Status.UPCOMING -> WidgetTokens.Secondary
+        Status.DONE -> WidgetTokens.Green      // green check -> green DONE
+        Status.RUNNING -> WidgetTokens.Green   // green dot   -> green LIVE
+        Status.UPCOMING -> WidgetTokens.Muted  // grey dot    -> grey SOON
     }
 
     /** "Sat, Jun 27" style date label. */
