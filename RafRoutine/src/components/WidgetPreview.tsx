@@ -25,11 +25,8 @@ import {tokens} from '../theme/tokens';
 import {
   computeLiveState,
   dateLabel,
-  durationLabel,
-  parseHHmm,
   relativeUpdated,
   statusLabel,
-  untilLabel,
 } from '../services/routineEngine';
 
 /* Native design canvas (from the reference). */
@@ -65,7 +62,6 @@ function WidgetPreview({routine, now}: WidgetPreviewProps): React.JSX.Element {
               <Header routine={routine} now={now} />
               <View style={styles.body}>
                 <View style={styles.leftColumn}>
-                  <NowNextRow routine={routine} now={now} live={live} />
                   <TodayCard routine={routine} live={live} />
                 </View>
                 <View style={styles.rightColumn}>
@@ -241,101 +237,8 @@ interface LiveProp {
   live: ReturnType<typeof computeLiveState>;
 }
 
-function NowNextRow({
-  routine,
-  now,
-  live,
-}: {
-  routine: Routine;
-  now: Date;
-} & LiveProp): React.JSX.Element {
-  const nowItem =
-    live.nowIndex !== null ? routine.timeline[live.nowIndex] : null;
-  const nextItem =
-    live.nextIndex !== null ? routine.timeline[live.nextIndex] : null;
-
-  return (
-    <View style={styles.nowNextRow}>
-      {/* NOW */}
-      <View style={[styles.card, styles.nowCard]}>
-        <View style={styles.cardTopRow}>
-          <View style={styles.kickerRow}>
-            <PulseDot color="#34d399" size={6} ring="#34d399" />
-            <Text style={[styles.kicker, {color: '#6ee7b7'}]}>NOW</Text>
-          </View>
-          <Text style={styles.monoTime}>
-            {nowItem ? `${nowItem.start}–${nowItem.end}` : '—'}
-          </Text>
-        </View>
-        {nowItem ? (
-          <>
-            <Text style={styles.className} numberOfLines={1}>
-              {nowItem.name}
-            </Text>
-            <Text style={styles.classMeta} numberOfLines={1}>
-              {nowItem.code} · {nowItem.room}
-            </Text>
-            <View style={styles.progressTrack}>
-              <View
-                style={[styles.progressFill, {width: `${live.progressPct}%`}]}
-              />
-            </View>
-            <Text style={styles.progressLabel}>
-              {live.progressPct}% · {live.minsLeft}m left
-            </Text>
-          </>
-        ) : (
-          <Text style={styles.emptyText}>No class right now</Text>
-        )}
-      </View>
-
-      {/* arrow */}
-      <View style={styles.arrowCol}>
-        <Text style={styles.arrow}>→</Text>
-      </View>
-
-      {/* NEXT */}
-      <View style={[styles.card, styles.nextCard]}>
-        <View style={styles.cardTopRow}>
-          <Text style={[styles.kicker, {color: '#9aa3b5'}]}>NEXT</Text>
-          {nextItem ? (
-            <View style={styles.kickerRow}>
-              <Text style={styles.clockGlyph}>◷</Text>
-              <Text style={styles.monoTime}>
-                {untilLabel(parseHHmm(nextItem.start, now), now)}
-              </Text>
-            </View>
-          ) : null}
-        </View>
-        {nextItem ? (
-          <>
-            <Text style={styles.className} numberOfLines={1}>
-              {nextItem.name}
-            </Text>
-            <Text style={styles.classMeta} numberOfLines={1}>
-              {nextItem.code} · {nextItem.room}
-            </Text>
-            <Text style={styles.nextRange}>
-              {nextItem.start} – {nextItem.end}
-            </Text>
-            <Text style={styles.nextFoot}>
-              Upcoming ·{' '}
-              {durationLabel(
-                parseHHmm(nextItem.start, now),
-                parseHHmm(nextItem.end, now),
-              )}
-            </Text>
-          </>
-        ) : (
-          <Text style={styles.emptyText}>No more classes</Text>
-        )}
-      </View>
-    </View>
-  );
-}
-
 /* ------------------------------------------------------------------ */
-/* Today list                                                          */
+/* Today list — sole occupant of the left column                       */
 /* ------------------------------------------------------------------ */
 
 function TodayCard({
@@ -357,22 +260,54 @@ function TodayCard({
         {routine.timeline.map((item, index) => {
           const status = live.statuses[index];
           const isDone = status === 'done';
+          const isRunning = status === 'running';
           const label = statusLabel(status);
           const labelColor = status === 'upcoming' ? '#6b7588' : '#34d399';
+
+          const nameColor = isDone ? '#828b9c' : '#eef1f6';
+          const timeColor = isDone ? '#5b6478' : '#aab0bd';
+          const metaColor = isDone ? '#5b6478' : '#828b9c';
+
+          const codeRoom = [item.code, item.room].filter(Boolean).join(' · ');
+          // Live class leads with progress so it never gets clipped first.
+          const meta = isRunning
+            ? `${live.progressPct}% · ${live.minsLeft}m left${
+                codeRoom ? ' · ' + codeRoom : ''
+              }`
+            : codeRoom;
+
           return (
             <View
               key={item.id}
-              style={[styles.todayRow, isDone ? styles.todayRowDone : null]}>
-              <View style={styles.todayDotCol}>
-                <StatusDot status={status} />
+              style={[
+                styles.todayRow,
+                index > 0 ? styles.todayRowDivider : null,
+              ]}>
+              {/* Line 1: indicator · class name · status label */}
+              <View style={styles.todayLine1}>
+                <View style={styles.todayDotCol}>
+                  <StatusDot status={status} />
+                </View>
+                <Text
+                  style={[styles.todayName, {color: nameColor}]}
+                  numberOfLines={1}>
+                  {item.name}
+                </Text>
+                <Text style={[styles.todayStatus, {color: labelColor}]}>
+                  {label}
+                </Text>
               </View>
-              <Text style={styles.todayTime}>{item.start}</Text>
-              <Text style={styles.todayName} numberOfLines={1}>
-                {item.name}
-              </Text>
-              <Text style={[styles.todayStatus, {color: labelColor}]}>
-                {label}
-              </Text>
+              {/* Line 2: time range · code · room (· progress) */}
+              <View style={styles.todayLine2}>
+                <Text style={[styles.todayTimeRange, {color: timeColor}]}>
+                  {item.start} – {item.end}
+                </Text>
+                <Text
+                  style={[styles.todayMeta, {color: metaColor}]}
+                  numberOfLines={1}>
+                  {meta}
+                </Text>
+              </View>
             </View>
           );
         })}
@@ -765,37 +700,54 @@ const styles = StyleSheet.create({
   todayList: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'space-around',
   },
   todayRow: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  todayRowDivider: {
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(255,255,255,0.09)',
+  },
+  todayLine1: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
   },
-  todayRowDone: {
-    opacity: 0.58,
+  todayLine2: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 3,
   },
   todayDotCol: {
-    width: 13,
+    width: 15,
     alignItems: 'center',
-  },
-  todayTime: {
-    fontFamily: tokens.mono,
-    fontSize: 10.5,
-    color: '#aab0bd',
-    width: 40,
   },
   todayName: {
     flex: 1,
-    fontSize: 12.5,
-    fontWeight: '600',
-    letterSpacing: -0.1,
+    fontSize: 15,
+    fontWeight: '700',
+    letterSpacing: -0.2,
     color: '#eef1f6',
+    marginLeft: 8,
+    marginRight: 6,
   },
   todayStatus: {
     fontFamily: tokens.mono,
-    fontSize: 8.5,
+    fontSize: 9,
+    fontWeight: '700',
     letterSpacing: 0.5,
+  },
+  todayTimeRange: {
+    fontFamily: tokens.mono,
+    fontSize: 12,
+    color: '#aab0bd',
+    marginRight: 8,
+  },
+  todayMeta: {
+    flex: 1,
+    fontFamily: tokens.mono,
+    fontSize: 10,
+    color: '#828b9c',
   },
   dotDone: {
     width: 13,

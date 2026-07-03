@@ -9,7 +9,6 @@ import androidx.glance.ImageProvider
 import androidx.glance.background
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
-import androidx.glance.layout.Column
 import androidx.glance.layout.Row
 import androidx.glance.layout.Spacer
 import androidx.glance.layout.fillMaxWidth
@@ -30,84 +29,88 @@ import com.rafroutine.widget.theme.WidgetTokens
  */
 @Composable
 fun Header(dateLabel: String, weekLabel: String, updatedText: String) {
+    // The outer Row keeps just two children — the left cluster and the date —
+    // because a Glance Row renders at most 10 direct children. The left items
+    // are nested in their own (weighted) Row so the date is never dropped.
     Row(
         modifier = GlanceModifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Logo mark in a soft box.
-        Box(
-            modifier = GlanceModifier
-                .width(22.dp)
-                .height(22.dp)
-                .background(ImageProvider(R.drawable.bg_logo)),
-            contentAlignment = Alignment.Center
+        Row(
+            modifier = GlanceModifier.defaultWeight(),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Image(
-                provider = ImageProvider(R.drawable.ic_logo),
-                contentDescription = null,
-                modifier = GlanceModifier.width(14.dp).height(14.dp),
-                colorFilter = androidx.glance.ColorFilter.tint(
-                    ColorProvider(WidgetTokens.OnGradientDark)
+            // Logo mark in a soft box.
+            Box(
+                modifier = GlanceModifier
+                    .width(22.dp)
+                    .height(22.dp)
+                    .background(ImageProvider(R.drawable.bg_logo)),
+                contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    provider = ImageProvider(R.drawable.ic_logo),
+                    contentDescription = null,
+                    modifier = GlanceModifier.width(14.dp).height(14.dp),
+                    colorFilter = androidx.glance.ColorFilter.tint(
+                        ColorProvider(WidgetTokens.OnGradientDark)
+                    )
                 )
-            )
-        }
+            }
 
-        Spacer(GlanceModifier.width(7.dp))
+            Spacer(GlanceModifier.width(7.dp))
 
-        Text(
-            text = "Raf Routine",
-            maxLines = 1,
-            style = TextStyle(
-                color = ColorProvider(WidgetTokens.OnGradientDark),
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold
-            )
-        )
-
-        Spacer(GlanceModifier.width(6.dp))
-
-        // "AI" pill
-        Box(
-            modifier = GlanceModifier
-                .background(ImageProvider(R.drawable.bg_ai_pill))
-                .padding(horizontal = 5.dp, vertical = 1.dp),
-            contentAlignment = Alignment.Center
-        ) {
             Text(
-                text = "AI",
-                maxLines = 1,
-                style = labelStyle(WidgetTokens.OnGradientDark, size = 8)
-            )
-        }
-
-        Spacer(GlanceModifier.width(8.dp))
-
-        // Green pulse dot + updated text
-        Dot(WidgetTokens.Green, size = 6)
-        Spacer(GlanceModifier.width(4.dp))
-        Text(
-            text = updatedText,
-            maxLines = 1,
-            style = TextStyle(
-                color = ColorProvider(WidgetTokens.OnGradientSoft),
-                fontSize = 9.sp,
-                fontWeight = FontWeight.Medium
-            )
-        )
-
-        // Push the date to the far right.
-        Spacer(GlanceModifier.defaultWeight())
-
-        Column(horizontalAlignment = Alignment.End) {
-            Text(
-                text = "$dateLabel · $weekLabel",
+                text = "Raf Routine",
                 maxLines = 1,
                 style = TextStyle(
                     color = ColorProvider(WidgetTokens.OnGradientDark),
-                    fontSize = 10.sp,
+                    fontSize = 14.sp,
                     fontWeight = FontWeight.Bold
                 )
             )
+
+            Spacer(GlanceModifier.width(6.dp))
+
+            // "AI" pill
+            Box(
+                modifier = GlanceModifier
+                    .background(ImageProvider(R.drawable.bg_ai_pill))
+                    .padding(horizontal = 5.dp, vertical = 1.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "AI",
+                    maxLines = 1,
+                    style = labelStyle(WidgetTokens.OnGradientDark, size = 8)
+                )
+            }
+
+            Spacer(GlanceModifier.width(8.dp))
+
+            // Green pulse dot + updated text
+            Dot(WidgetTokens.Green, size = 6)
+            Spacer(GlanceModifier.width(4.dp))
+            Text(
+                text = updatedText,
+                maxLines = 1,
+                style = TextStyle(
+                    color = ColorProvider(WidgetTokens.OnGradientSoft),
+                    fontSize = 9.sp,
+                    fontWeight = FontWeight.Medium
+                )
+            )
         }
+
+        // Date · week, pinned to the far right.
+        Text(
+            text = "$dateLabel · $weekLabel",
+            maxLines = 1,
+            style = TextStyle(
+                color = ColorProvider(WidgetTokens.OnGradientDark),
+                fontSize = 10.sp,
+                fontWeight = FontWeight.Bold
+            )
+        )
     }
 }

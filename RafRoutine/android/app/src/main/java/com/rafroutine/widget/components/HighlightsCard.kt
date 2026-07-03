@@ -1,8 +1,11 @@
 package com.rafroutine.widget.components
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.glance.GlanceModifier
+import androidx.glance.appwidget.lazy.LazyColumn
+import androidx.glance.appwidget.lazy.itemsIndexed
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Column
 import androidx.glance.layout.Row
@@ -44,18 +47,18 @@ fun HighlightsCard(
 
         Spacer(GlanceModifier.height(6.dp))
 
-        // Spacing is applied as per-row top padding rather than interleaved
-        // Spacers. A Glance Column renders at most 10 direct children; with 5
-        // rows, interleaved Spacers would push the count to 11 and silently
-        // drop the last highlight.
-        items.forEachIndexed { i, item ->
-            HighlightRow(item, topPadding = if (i == 0) 0.dp else 5.dp)
+        // Scrollable list of highlights so the week can hold more events than
+        // fit. A LazyColumn also sidesteps Glance's 10-children-per-Column cap.
+        LazyColumn(modifier = GlanceModifier.fillMaxWidth().defaultWeight()) {
+            itemsIndexed(items) { i, item ->
+                HighlightRow(item, topPadding = if (i == 0) 0.dp else 5.dp)
+            }
         }
     }
 }
 
 @Composable
-private fun HighlightRow(item: HighlightItem, topPadding: androidx.compose.ui.unit.Dp) {
+private fun HighlightRow(item: HighlightItem, topPadding: Dp) {
     Row(
         modifier = GlanceModifier.fillMaxWidth().padding(top = topPadding),
         verticalAlignment = Alignment.CenterVertically
