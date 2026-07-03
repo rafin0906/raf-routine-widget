@@ -6,6 +6,7 @@ import androidx.compose.ui.unit.dp
 import androidx.glance.ColorFilter
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
+import androidx.glance.LocalSize
 import androidx.glance.Image
 import androidx.glance.ImageProvider
 import androidx.glance.appwidget.GlanceAppWidget
@@ -17,6 +18,7 @@ import androidx.glance.layout.Box
 import androidx.glance.layout.Column
 import androidx.glance.layout.Row
 import androidx.glance.layout.Spacer
+import androidx.glance.layout.fillMaxHeight
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.height
@@ -45,7 +47,9 @@ import java.time.LocalTime
  */
 class RafRoutineWidget : GlanceAppWidget() {
 
-    override val sizeMode: SizeMode = SizeMode.Single
+    // Exact so LocalSize reports the real widget size and the layout re-derives
+    // its column split whenever the user resizes the widget.
+    override val sizeMode: SizeMode = SizeMode.Exact
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         val stored = RoutineRepository.read(context)
@@ -87,6 +91,14 @@ class RafRoutineWidget : GlanceAppWidget() {
         val dateLabel = LiveState.dateLabel(today)
         val updatedText = LiveState.relativeUpdated(routine.meta.updatedAt, nowMs)
 
+        // Right column width tracks the reference proportion (~32% of the
+        // content width, matching the design's 280 / ~860 split) instead of a
+        // fixed dp, so both columns stay balanced at any widget size. Clamped so
+        // it never starves the left column or gets too wide to be readable.
+        val size = LocalSize.current
+        val contentWidth = size.width - WidgetTokens.WidgetPadding * 2 - WidgetTokens.SectionGap
+        val rightColumnWidth = (contentWidth * 0.34f).coerceIn(120.dp, 210.dp)
+
         Box(
             modifier = GlanceModifier
                 .fillMaxSize()
@@ -104,7 +116,11 @@ class RafRoutineWidget : GlanceAppWidget() {
 
                 Row(modifier = GlanceModifier.fillMaxSize()) {
                     // ----- Left column: Now / Next + Today list -----
-                    Column(modifier = GlanceModifier.defaultWeight().fillMaxSize()) {
+                    // NOTE: fill HEIGHT only. A .fillMaxSize() here also fills
+                    // width (match_parent), which would swallow the whole Row and
+                    // collapse the right column to zero. The horizontal split is
+                    // owned by defaultWeight (left) + fixed width (right).
+                    Column(modifier = GlanceModifier.defaultWeight().fillMaxHeight()) {
                         Row(
                             modifier = GlanceModifier.fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically
@@ -147,7 +163,7 @@ class RafRoutineWidget : GlanceAppWidget() {
                     Spacer(GlanceModifier.width(WidgetTokens.SectionGap))
 
                     // ----- Right column: Important + Highlights -----
-                    Column(modifier = GlanceModifier.width(WidgetTokens.RightColumnWidth).fillMaxSize()) {
+                    Column(modifier = GlanceModifier.width(rightColumnWidth).fillMaxHeight()) {
                         ImportantCard(
                             items = routine.important,
                             modifier = GlanceModifier.fillMaxWidth()

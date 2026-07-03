@@ -4,6 +4,7 @@ import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
+import androidx.glance.appwidget.updateAll
 import com.rafroutine.data.RoutineRepository
 import com.rafroutine.widget.RafRoutineWidget
 import kotlinx.coroutines.CoroutineScope
