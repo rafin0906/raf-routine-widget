@@ -119,11 +119,27 @@ def scrape_recent_messages() -> dict:
             page = context.pages[0] if context.pages else context.new_page()
             page.goto("https://web.whatsapp.com")
 
+            # Wait for WhatsApp Web main interface (search bar) to load
+            search_box = page.locator('div[contenteditable="true"]').first
+            search_box.wait_for(state="visible", timeout=60000)
+            print("[scraper] WhatsApp Web loaded successfully.")
+
             for group_name in WHATSAPP_GROUPS:
                 try:
-                    target = page.locator(f"text='{group_name}'").first
-                    target.wait_for(state="visible", timeout=45000)
+                    print(f"[scraper] Searching for group: {group_name}")
+                    search_box.click()
+                    search_box.fill("")
+                    search_box.type(group_name)
+                    page.wait_for_timeout(3000) # Wait for search results to filter
+
+                    # Select the group from the search results
+                    target = page.locator(f'span[title="{group_name}"]').first
+                    if not target.is_visible():
+                        target = page.locator(f"text='{group_name}'").first
+                        
+                    target.wait_for(state="visible", timeout=15000)
                     target.click()
+                    print(f"[scraper] Opened chat: {group_name}")
 
                     selector = 'div[role="row"]'
                     page.wait_for_selector(selector, timeout=10000)
@@ -138,6 +154,11 @@ def scrape_recent_messages() -> dict:
                         result["totalNewMessages"] += len(new)
                     else:
                         result["groups"][group_name] = []
+                        
+                    # Clear search box for the next search
+                    search_box.click()
+                    search_box.fill("")
+                    page.wait_for_timeout(1000)
 
                 except Exception as exc:  # noqa: BLE001
                     result["groups"][group_name] = []
@@ -151,6 +172,13 @@ def scrape_recent_messages() -> dict:
                         print(f"[scraper] Saved error screenshot to {ss_path}")
                     except Exception as ss_err:
                         print(f"[scraper] Failed to save screenshot: {ss_err}")
+                        
+                    # Clear search box in case of failure to be ready for next group
+                    try:
+                        search_box.click()
+                        search_box.fill("")
+                    except Exception:
+                        pass
 
             page.wait_for_timeout(1000)
             context.close()

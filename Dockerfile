@@ -18,6 +18,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxshmfence1 \
     libxss1 \
     libxtst6 \
+    fontconfig \
+    fonts-liberation \
+    && fc-cache -f -v \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
