@@ -102,15 +102,11 @@ def scrape_recent_messages() -> dict:
     except Exception as e:
         print(f"[scraper] Warning: Failed to extract browser_data.zip: {e}")
 
-    session_state_path = BASE_DIR / "session_state.json"
-    storage_state_arg = str(session_state_path) if session_state_path.exists() else None
-
     try:
         with sync_playwright() as p:
             context = p.chromium.launch_persistent_context(
                 str(BROWSER_DATA_DIR),
                 headless=True,
-                storage_state=storage_state_arg,
                 user_agent=(
                     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
                     "AppleWebKit/537.36 (KHTML, like Gecko) "
