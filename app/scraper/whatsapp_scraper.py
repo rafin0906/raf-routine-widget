@@ -136,7 +136,7 @@ def scrape_recent_messages() -> dict:
 
             for group_name in WHATSAPP_GROUPS:
                 try:
-                    target = page.locator(f"text='{group_name}'").first
+                    target = page.get_by_text(group_name).first
                     target.wait_for(state="visible", timeout=15000)
                     target.click()
 
