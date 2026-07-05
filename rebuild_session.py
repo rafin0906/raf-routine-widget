@@ -1,6 +1,7 @@
 import os
 import shutil
 import zipfile
+# pyrefly: ignore [missing-import]
 from playwright.sync_api import sync_playwright
 
 def rebuild():
