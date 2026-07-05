@@ -39,6 +39,45 @@ def run():
             
             context.close()
             print("\nSession saved successfully! You can now run the scraper in headless mode.")
+            
+            # Compress browser_data into browser_data.zip for Render
+            try:
+                import os
+                import zipfile
+                import shutil
+
+                project_root = Path(__file__).resolve().parent
+                zip_path = project_root / "browser_data.zip"
+                temp_dir = project_root / "temp_zip_data"
+                shutil.rmtree(temp_dir, ignore_errors=True)
+
+                print("\nCompressing browser profile into browser_data.zip for Render...")
+                shutil.copytree(BROWSER_DATA_DIR, temp_dir)
+
+                # Remove non-essential cache folders to keep the ZIP file small
+                shutil.rmtree(temp_dir / "Default" / "Cache", ignore_errors=True)
+                shutil.rmtree(temp_dir / "Default" / "Code Cache", ignore_errors=True)
+                shutil.rmtree(temp_dir / "Default" / "GPUCache", ignore_errors=True)
+                shutil.rmtree(temp_dir / "ShaderCache", ignore_errors=True)
+                shutil.rmtree(temp_dir / "GrShaderCache", ignore_errors=True)
+                shutil.rmtree(temp_dir / "GraphiteDawnCache", ignore_errors=True)
+                shutil.rmtree(temp_dir / "Crashpad", ignore_errors=True)
+
+                # Create the zip archive
+                with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+                    for root, dirs, files in os.walk(temp_dir):
+                        for file in files:
+                            file_path = Path(root) / file
+                            arcname = file_path.relative_to(temp_dir)
+                            zipf.write(file_path, arcname)
+
+                # Clean up temporary directory
+                shutil.rmtree(temp_dir, ignore_errors=True)
+                print(f"Success! Created optimized ZIP: {zip_path} ({os.path.getsize(zip_path) // (1024*1024)} MB)")
+                print("👉 Now push browser_data.zip to GitHub to update the Render session!")
+            except Exception as e:
+                print(f"\nWarning: Failed to create browser_data.zip: {e}")
+
             print("================================================================")
     except Exception as e:
         print(f"\nError: {e}")
