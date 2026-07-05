@@ -27,7 +27,7 @@ def enableProguardInReleaseBuilds = false
 /**
  * The preferred build flavor of JavaScriptCore (JSC)
  */
-def jscFlavor = 'org.webkit:android-jsc:+'
+def jscFlavor = 'io.github.react-native-community:jsc-android:2026004.+'
 
 android {
     ndkVersion rootProject.ext.ndkVersion
@@ -35,6 +35,12 @@ android {
     compileSdk rootProject.ext.compileSdkVersion
 
     namespace "com.rafroutine"
+
+    packagingOptions {
+        jniLibs {
+            useLegacyPackaging true
+        }
+    }
 
     // ----- WIDGET-SPECIFIC: Compose + Glance need these enabled -----
     buildFeatures {

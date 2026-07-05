@@ -39,9 +39,7 @@ MANIFEST
 .project
 .pydevproject
 
-# Browser context and Session files
-session_state.json
-browser_data/
+
 
 # Application runtime database logs
 app/db/message_history.json
@@ -49,6 +47,7 @@ app/db/processed_messages.json
 app/db/highlights.json
 app/db/important_notices.json
 app/db/routine_overrides.json
+browser_data/
 
 # Operating System Files
 .DS_Store

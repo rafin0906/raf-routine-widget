@@ -137,7 +137,7 @@ private fun ClassRow(
                 Spacer(GlanceModifier.width(9.dp))
                 Text(
                     text = item.name,
-                    maxLines = 1,
+                    maxLines = 2,
                     modifier = GlanceModifier.defaultWeight(),
                     style = titleStyle(nameColor, size = 16)
                 )
@@ -164,7 +164,7 @@ private fun ClassRow(
                 Spacer(GlanceModifier.width(8.dp))
                 Text(
                     text = meta,
-                    maxLines = 1,
+                    maxLines = 2,
                     modifier = GlanceModifier.defaultWeight(),
                     style = monoStyle(metaColor, size = 10)
                 )

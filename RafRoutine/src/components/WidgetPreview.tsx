@@ -18,7 +18,7 @@
  */
 
 import React, {useState} from 'react';
-import {LayoutChangeEvent, StyleSheet, Text, View} from 'react-native';
+import {LayoutChangeEvent, ScrollView, StyleSheet, Text, View} from 'react-native';
 
 import type {Routine, Urgency} from '../types/routine';
 import {tokens} from '../theme/tokens';
@@ -288,11 +288,19 @@ function TodayCard({
                 <View style={styles.todayDotCol}>
                   <StatusDot status={status} />
                 </View>
-                <Text
-                  style={[styles.todayName, {color: nameColor}]}
-                  numberOfLines={1}>
-                  {item.name}
-                </Text>
+                <View style={styles.todayNameScrollerWrap}>
+                  <ScrollView
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    bounces={false}
+                    style={styles.todayNameScroller}
+                    contentContainerStyle={styles.todayNameScrollerContent}>
+                    <Text style={[styles.todayName, {color: nameColor}]}>
+                      {item.name}
+                    </Text>
+                  </ScrollView>
+                  <ScrollEdgeFades />
+                </View>
                 <Text style={[styles.todayStatus, {color: labelColor}]}>
                   {label}
                 </Text>
@@ -302,11 +310,19 @@ function TodayCard({
                 <Text style={[styles.todayTimeRange, {color: timeColor}]}>
                   {item.start} – {item.end}
                 </Text>
-                <Text
-                  style={[styles.todayMeta, {color: metaColor}]}
-                  numberOfLines={1}>
-                  {meta}
-                </Text>
+                <View style={styles.todayMetaScrollerWrap}>
+                  <ScrollView
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    bounces={false}
+                    style={styles.todayMetaScroller}
+                    contentContainerStyle={styles.todayMetaScrollerContent}>
+                    <Text style={[styles.todayMeta, {color: metaColor}]}>
+                      {meta}
+                    </Text>
+                  </ScrollView>
+                  <ScrollEdgeFades />
+                </View>
               </View>
             </View>
           );
@@ -328,6 +344,23 @@ function StatusDot({status}: {status: string}): React.JSX.Element {
     return <PulseDot color="#34d399" size={10} ring="#34d399" />;
   }
   return <View style={styles.dotUpcoming} />;
+}
+
+function ScrollEdgeFades(): React.JSX.Element {
+  return (
+    <View pointerEvents="none" style={styles.todayFadeOverlay}>
+      <View style={styles.todayFadeLeft}>
+        <View style={[styles.todayFadeSlice, styles.todayFadeSliceStrong]} />
+        <View style={[styles.todayFadeSlice, styles.todayFadeSliceMid]} />
+        <View style={[styles.todayFadeSlice, styles.todayFadeSliceSoft]} />
+      </View>
+      <View style={styles.todayFadeRight}>
+        <View style={[styles.todayFadeSlice, styles.todayFadeSliceSoft]} />
+        <View style={[styles.todayFadeSlice, styles.todayFadeSliceMid]} />
+        <View style={[styles.todayFadeSlice, styles.todayFadeSliceStrong]} />
+      </View>
+    </View>
+  );
 }
 
 /* ------------------------------------------------------------------ */
@@ -722,14 +755,25 @@ const styles = StyleSheet.create({
     width: 15,
     alignItems: 'center',
   },
-  todayName: {
+  todayNameScrollerWrap: {
     flex: 1,
+    marginLeft: 8,
+    marginRight: 6,
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  todayNameScroller: {
+    flex: 1,
+  },
+  todayNameScrollerContent: {
+    minWidth: '100%',
+  },
+  todayName: {
     fontSize: 15,
     fontWeight: '700',
     letterSpacing: -0.2,
     color: '#eef1f6',
-    marginLeft: 8,
-    marginRight: 6,
+    paddingRight: 16,
   },
   todayStatus: {
     fontFamily: tokens.mono,
@@ -743,11 +787,48 @@ const styles = StyleSheet.create({
     color: '#aab0bd',
     marginRight: 8,
   },
-  todayMeta: {
+  todayMetaScrollerWrap: {
     flex: 1,
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  todayMetaScroller: {
+    flex: 1,
+  },
+  todayMetaScrollerContent: {
+    minWidth: '100%',
+  },
+  todayMeta: {
     fontFamily: tokens.mono,
     fontSize: 10,
     color: '#828b9c',
+    paddingRight: 16,
+  },
+  todayFadeOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  todayFadeLeft: {
+    width: 14,
+    flexDirection: 'row',
+  },
+  todayFadeRight: {
+    width: 14,
+    flexDirection: 'row',
+  },
+  todayFadeSlice: {
+    flex: 1,
+    backgroundColor: 'rgba(12,14,19,0.7)',
+  },
+  todayFadeSliceStrong: {
+    opacity: 0.92,
+  },
+  todayFadeSliceMid: {
+    opacity: 0.56,
+  },
+  todayFadeSliceSoft: {
+    opacity: 0.22,
   },
   dotDone: {
     width: 13,

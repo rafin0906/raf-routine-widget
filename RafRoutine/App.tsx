@@ -22,7 +22,12 @@ import {
 
 import type {Routine} from './src/types/routine';
 import {tokens} from './src/theme/tokens';
-import {resetToSample, seedIfEmpty} from './src/storage/routineStorage';
+import {
+  resetToSample,
+  saveRoutine,
+  seedIfEmpty,
+} from './src/storage/routineStorage';
+import {fetchRoutine} from './src/services/routineApi';
 import {WidgetBridge, isWidgetBridgeAvailable} from './src/native/WidgetBridge';
 import WidgetPreview from './src/components/WidgetPreview';
 import PrimaryButton from './src/components/PrimaryButton';
@@ -31,29 +36,70 @@ function App(): React.JSX.Element {
   const [routine, setRoutine] = useState<Routine | null>(null);
   const [now, setNow] = useState<Date>(() => new Date());
   const [pushing, setPushing] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const [status, setStatus] = useState<string>('');
 
   // Track mount state so async callbacks don't set state after unmount.
   const mountedRef = useRef(true);
 
-  // Seed (or load) routine once on mount.
+  const syncWidget = useCallback(async (nextRoutine: Routine): Promise<void> => {
+    if (!isWidgetBridgeAvailable()) {
+      return;
+    }
+    await WidgetBridge.pushRoutine(nextRoutine);
+  }, []);
+
+  // Pull live data from the backend, cache it, and show it. On any failure keep
+  // whatever is already displayed (cached/sample) and report offline.
+  const loadFromServer = useCallback(async (): Promise<void> => {
+    setRefreshing(true);
+    try {
+      const live = await fetchRoutine();
+      await saveRoutine(live);
+      await syncWidget(live);
+      if (!mountedRef.current) {
+        return;
+      }
+      setRoutine(live);
+      setNow(new Date());
+      setStatus('Live data loaded from server and synced to widget.');
+    } catch (err) {
+      console.warn('[App] server fetch failed:', err);
+      if (mountedRef.current) {
+        setStatus('Offline — showing saved data.');
+      }
+    } finally {
+      if (mountedRef.current) {
+        setRefreshing(false);
+      }
+    }
+  }, []);
+
+  // Seed cached/sample data for an instant paint, then replace it with live
+  // backend data.
   useEffect(() => {
     mountedRef.current = true;
     let active = true;
     seedIfEmpty()
       .then(loaded => {
+        void syncWidget(loaded).catch(err => {
+          console.warn('[App] initial widget sync failed:', err);
+        });
         if (active) {
           setRoutine(loaded);
         }
       })
       .catch(err => {
         console.warn('[App] seedIfEmpty failed:', err);
+      })
+      .finally(() => {
+        void loadFromServer();
       });
     return () => {
       active = false;
       mountedRef.current = false;
     };
-  }, []);
+  }, [loadFromServer]);
 
   // Tick the clock every second so live state updates.
   useEffect(() => {
@@ -95,19 +141,20 @@ function App(): React.JSX.Element {
   const handleReset = useCallback(async () => {
     try {
       const sample = await resetToSample();
+      await syncWidget(sample);
       if (!mountedRef.current) {
         return;
       }
       setRoutine(sample);
       setNow(new Date());
-      setStatus('Reset to sample data.');
+      setStatus('Reset to sample data and synced to widget.');
     } catch (err) {
       console.warn('[App] reset failed:', err);
       if (mountedRef.current) {
         setStatus('Reset failed — see logs.');
       }
     }
-  }, []);
+  }, [syncWidget]);
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -137,6 +184,14 @@ function App(): React.JSX.Element {
             variant="solid"
             loading={pushing}
             disabled={!routine}
+          />
+          <View style={styles.gap} />
+          <PrimaryButton
+            title="Refresh from server"
+            onPress={loadFromServer}
+            variant="ghost"
+            loading={refreshing}
+            disabled={refreshing}
           />
           <View style={styles.gap} />
           <PrimaryButton
