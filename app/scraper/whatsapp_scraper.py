@@ -11,7 +11,7 @@ from playwright.sync_api import sync_playwright
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
-from app.config import WHATSAPP_GROUPS, BROWSER_DATA_DIR, TIMEZONE
+from app.config import WHATSAPP_GROUPS, BROWSER_DATA_DIR, TIMEZONE, BASE_DIR
 from app.services.json_store import read_json, write_json
 from app.config import MESSAGE_HISTORY_FILE
 
@@ -63,11 +63,15 @@ def scrape_recent_messages() -> dict:
         "error": None,
     }
 
+    session_state_path = BASE_DIR / "session_state.json"
+    storage_state_arg = str(session_state_path) if session_state_path.exists() else None
+
     try:
         with sync_playwright() as p:
             context = p.chromium.launch_persistent_context(
                 str(BROWSER_DATA_DIR),
                 headless=True,
+                storage_state=storage_state_arg,
                 user_agent=(
                     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
                     "AppleWebKit/537.36 (KHTML, like Gecko) "
