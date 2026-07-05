@@ -41,6 +41,7 @@ MAX_HIGHLIGHTS = 4                 # Keep only the latest N highlights
 WHATSAPP_GROUPS = [
     "CSE'23 ANNOUNCEMENT",
     "CSE 23 Section-C(দুঃসংবাদ)",
+    "CSE'23"
 ]
 
 # ─── Browser data directory (Playwright persistent context) ──────────
