@@ -19,7 +19,7 @@ from __future__ import annotations
 import asyncio
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.scheduler import (
@@ -100,21 +100,28 @@ async def highlights():
 
 
 @app.post("/api/scraper/run")
-async def scraper_run():
-    """Manually trigger a scrape + LangGraph processing cycle.
+async def scraper_run(background_tasks: BackgroundTasks):
+    """Manually trigger a scrape + LangGraph processing cycle in the background.
 
-    Returns immediately with ``already_running`` if a scrape is in
-    progress; otherwise waits for the pipeline to complete."""
+    Returns immediately with ``started`` and executes the pipeline
+    in the background to prevent proxy timeouts."""
     if scraper_lock.locked():
         return {
             "status": "already_running",
             "message": "Scraper is currently running. Try again later.",
         }
 
-    async with scraper_lock:
-        await run_scrape_and_process()
+    async def run_in_background():
+        async with scraper_lock:
+            await run_scrape_and_process()
 
-    return {"status": "completed", "scheduler": get_scheduler_status()}
+    background_tasks.add_task(run_in_background)
+
+    return {
+        "status": "started",
+        "message": "Scraper run has been triggered in the background.",
+        "scheduler": get_scheduler_status(),
+    }
 
 
 @app.get("/api/scraper/status")
