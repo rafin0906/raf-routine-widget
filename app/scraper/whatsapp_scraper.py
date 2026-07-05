@@ -142,6 +142,15 @@ def scrape_recent_messages() -> dict:
                 except Exception as exc:  # noqa: BLE001
                     result["groups"][group_name] = []
                     print(f"[scraper] Error scraping '{group_name}': {exc}")
+                    
+                    # Capture screenshot to debug why it failed
+                    try:
+                        import os
+                        ss_path = os.path.join(os.getcwd(), "error_screenshot.png")
+                        page.screenshot(path=ss_path)
+                        print(f"[scraper] Saved error screenshot to {ss_path}")
+                    except Exception as ss_err:
+                        print(f"[scraper] Failed to save screenshot: {ss_err}")
 
             page.wait_for_timeout(1000)
             context.close()

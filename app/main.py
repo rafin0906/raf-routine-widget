@@ -122,3 +122,15 @@ async def scraper_status():
     """Scheduler and scraper status: last scrape time, next planned
     scrape, current interval, running flag, last error."""
     return get_scheduler_status()
+
+
+@app.get("/api/debug-screenshot")
+async def debug_screenshot():
+    """Returns the last debug screenshot from Playwright to help troubleshoot login issues."""
+    import os
+    from fastapi.responses import FileResponse
+    path = os.path.join(os.getcwd(), "error_screenshot.png")
+    if os.path.exists(path):
+        return FileResponse(path)
+    return {"error": "No debug screenshot found. Run the scraper first."}
+
