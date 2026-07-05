@@ -117,10 +117,6 @@ def scrape_recent_messages() -> dict:
                     "--disable-blink-features=AutomationControlled",
                     "--disable-dev-shm-usage",
                     "--no-sandbox",
-                    "--disable-gpu",
-                    "--disable-extensions",
-                    "--disable-setuid-sandbox",
-                    "--disable-accelerated-2d-canvas",
                 ],
             )
 
