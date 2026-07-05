@@ -136,21 +136,6 @@ def scrape_recent_messages() -> dict:
                 print(f"[scraper] Warning: Failed to inject decrypted cookies: {e}")
 
             page = context.pages[0] if context.pages else context.new_page()
-
-            # Abort heavy and tracking requests to save memory and speed up load on Render
-            try:
-                def route_interceptor(route):
-                    req_type = route.request.resource_type
-                    url = route.request.url.lower()
-                    if req_type in ["image", "media"] or "analytics" in url or "telemetry" in url or "facebook" in url:
-                        route.abort()
-                    else:
-                        route.continue_()
-                page.route("**/*", route_interceptor)
-                print("[scraper] Network request interceptor active (blocking images/media/analytics).")
-            except Exception as route_err:
-                print(f"[scraper] Warning: Failed to setup route interceptor: {route_err}")
-
             page.goto("https://web.whatsapp.com")
 
             # Wait for WhatsApp Web main interface (search bar) to load
