@@ -27,6 +27,11 @@ def save_session():
 
         # 3. Session state is saved automatically in the browser_data directory
         print("Session saved successfully to the browser_data directory!")
+        
+        # Export session state to JSON for cloud deployment
+        session_json_path = os.path.join(os.getcwd(), "session_state.json")
+        context.storage_state(path=session_json_path)
+        print(f"Session state JSON exported to: {session_json_path}")
 
         context.close()
 
