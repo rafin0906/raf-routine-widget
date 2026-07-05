@@ -118,8 +118,6 @@ def scrape_recent_messages() -> dict:
                     "--disable-dev-shm-usage",
                     "--no-sandbox",
                     "--disable-gpu",
-                    "--js-flags=--max-old-space-size=256",
-                    "--no-zygote",
                     "--disable-extensions",
                     "--disable-setuid-sandbox",
                     "--disable-accelerated-2d-canvas",
@@ -145,9 +143,19 @@ def scrape_recent_messages() -> dict:
             page.goto("https://web.whatsapp.com")
 
             # Wait for WhatsApp Web main interface (search bar) to load
-            search_box = page.locator('div[contenteditable="true"]').first
-            search_box.wait_for(state="visible", timeout=60000)
-            print("[scraper] WhatsApp Web interface loaded successfully.")
+            try:
+                search_box = page.get_by_role("textbox").first
+                search_box.wait_for(state="visible", timeout=60000)
+                print("[scraper] WhatsApp Web interface loaded successfully.")
+            except Exception as e:
+                try:
+                    import os
+                    ss_path = os.path.join(os.getcwd(), "error_screenshot.png")
+                    page.screenshot(path=ss_path)
+                    print(f"[scraper] Search box loading failed. Saved error screenshot to {ss_path}")
+                except Exception as ss_err:
+                    print(f"[scraper] Failed to save error screenshot: {ss_err}")
+                raise e
 
             for group_name in WHATSAPP_GROUPS:
                 try:
