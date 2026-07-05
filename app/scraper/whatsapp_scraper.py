@@ -18,6 +18,39 @@ from app.config import MESSAGE_HISTORY_FILE
 _tz = ZoneInfo(TIMEZONE)
 
 
+def restore_browser_data() -> None:
+    """
+    If browser_data.zip exists at the root, extract it to populate the BROWSER_DATA_DIR.
+    Handles both zipping of the directory contents and zipping of the directory itself.
+    """
+    import zipfile
+    import shutil
+
+    zip_path = BASE_DIR / "browser_data.zip"
+    if zip_path.exists():
+        # Only extract if BROWSER_DATA_DIR is empty or doesn't exist
+        if not BROWSER_DATA_DIR.exists() or not any(BROWSER_DATA_DIR.iterdir()):
+            print(f"[scraper] Extracting {zip_path.name} to {BROWSER_DATA_DIR}...")
+            temp_extract_dir = BASE_DIR / "temp_browser_data"
+            shutil.rmtree(temp_extract_dir, ignore_errors=True)
+            temp_extract_dir.mkdir(exist_ok=True)
+
+            with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+                zip_ref.extractall(temp_extract_dir)
+
+            # Check if zip contains a nested 'browser_data' folder
+            nested_dir = temp_extract_dir / "browser_data"
+            shutil.rmtree(BROWSER_DATA_DIR, ignore_errors=True)
+            if nested_dir.exists() and nested_dir.is_dir():
+                shutil.move(str(nested_dir), str(BROWSER_DATA_DIR))
+            else:
+                shutil.move(str(temp_extract_dir), str(BROWSER_DATA_DIR))
+
+            # Clean up temp directory
+            shutil.rmtree(temp_extract_dir, ignore_errors=True)
+            print("[scraper] Browser profile extraction complete!")
+
+
 def _filter_new_messages(messages: list[str], group_name: str) -> list[str]:
     """
     Compare *messages* against what is already stored in
@@ -62,6 +95,12 @@ def scrape_recent_messages() -> dict:
         "totalNewMessages": 0,
         "error": None,
     }
+
+    # Ensure browser profile is populated before launching Playwright
+    try:
+        restore_browser_data()
+    except Exception as e:
+        print(f"[scraper] Warning: Failed to extract browser_data.zip: {e}")
 
     session_state_path = BASE_DIR / "session_state.json"
     storage_state_arg = str(session_state_path) if session_state_path.exists() else None
