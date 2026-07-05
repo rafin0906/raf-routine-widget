@@ -17,7 +17,7 @@ import java.util.Locale
  */
 object BackendRoutineSync {
 
-    private const val BACKEND_URL = "https://raf-routine-widget.onrender.com/api/widget-state"
+    private const val BACKEND_URL = "https://raf-routine-widget-docker.onrender.com/api/widget-state"
     private const val CONNECT_TIMEOUT_MS = 4000
     private const val READ_TIMEOUT_MS = 4000
 
