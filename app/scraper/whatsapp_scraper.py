@@ -116,6 +116,21 @@ def scrape_recent_messages() -> dict:
                 args=["--disable-blink-features=AutomationControlled"],
             )
 
+            # Inject decrypted cookies from session_state.json to bypass Windows DPAPI encryption on Render
+            try:
+                session_state_path = BASE_DIR / "session_state.json"
+                if session_state_path.exists():
+                    import json
+                    print(f"[scraper] Injecting decrypted cookies from {session_state_path.name}...")
+                    with open(session_state_path, "r", encoding="utf-8") as f:
+                        state_data = json.load(f)
+                    cookies = state_data.get("cookies", [])
+                    if cookies:
+                        context.add_cookies(cookies)
+                        print(f"[scraper] Successfully injected {len(cookies)} cookies.")
+            except Exception as e:
+                print(f"[scraper] Warning: Failed to inject decrypted cookies: {e}")
+
             page = context.pages[0] if context.pages else context.new_page()
             page.goto("https://web.whatsapp.com")
 
