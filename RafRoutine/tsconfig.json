@@ -15,6 +15,6 @@
     "forceConsistentCasingInFileNames": true,
     "types": ["react", "react-native"]
   },
-  "include": ["App.tsx", "src"],
+  "include": ["App.tsx", "src/**/*"],
   "exclude": ["node_modules", "android", "ios"]
 }
