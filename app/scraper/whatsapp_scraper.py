@@ -113,7 +113,17 @@ def scrape_recent_messages() -> dict:
                     "Chrome/126.0.0.0 Safari/537.36"
                 ),
                 viewport={"width": 1920, "height": 1080},
-                args=["--disable-blink-features=AutomationControlled"],
+                args=[
+                    "--disable-blink-features=AutomationControlled",
+                    "--disable-dev-shm-usage",
+                    "--no-sandbox",
+                    "--disable-gpu",
+                    "--js-flags=--max-old-space-size=256",
+                    "--no-zygote",
+                    "--disable-extensions",
+                    "--disable-setuid-sandbox",
+                    "--disable-accelerated-2d-canvas",
+                ],
             )
 
             # Inject decrypted cookies from session_state.json to bypass Windows DPAPI encryption on Render
